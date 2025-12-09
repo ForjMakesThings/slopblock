@@ -4,9 +4,7 @@ var blacklistedVids = [
 var safeDeleteNodes = [
   "YTD-VIDEO-RENDERER", "YTD-CHANNEL-RENDERER", "YTD-RICH-ITEM-RENDERER", "YT-LOCKUP-VIEW-MODEL"
 ];
-var safeDeleteClasses = [
-  "ytGridShelfViewModelGridShelfItem"
-];
+// list of channels that frequently upload AI content
 var blacklistedChan = [
   "airevolutionx", "kaylaimee", "JuliaMcCoy", "Real_or_Ai3", "Hehind", "ReallyNotAi", "JiembaSands", "Sovibes", "SweetGameASMR4", "Aitopmovies", 
   "kellyeld2323", "PlayHop2", "Underworld-g1n", "goody_ai", "roy_cassette", "thedorbrothers", "Dankieft", "ClickyAI", "YetiAF", "YaBegitulahLiteEdition",
@@ -14,7 +12,8 @@ var blacklistedChan = [
   "PalteksRanking", "mikeyagain", "dostpappu", "abirhsnt", "bennettwaisbren", "TheRanking_LOL", "rizzler.clipz.67", "MR_AI_Creatorr", "MaxNovakTutorials", "AI_SLAPS",
   "theAIsearch", "AI_In_Context", "mindful-machines", "JudasBooth", "JeffSu"
 ];
-// Callback function to execute when mutations are observed
+
+// Callback functions to execute when mutations are observed
 const callbackLabel = (mutationList, observer) => {
   mutationList.forEach(mutation => {
     if (mutation.addedNodes.length > 0) {
@@ -98,8 +97,6 @@ function addLabel(node, label) {
     "color:white; background-color:rgba(255, 0, 0, 0.45);font-family: 'Roboto','Arial',sans-serif;font-size: 1.2rem;line-height: 1.8rem;font-weight: 500;margin-left:4px;padding-left:6px;padding-right:6px;border-radius:2px;"
   node.appendChild(newHt);
 }
-//for when child nodes are added or removed
-
 // Create an observer instance linked to the callback function
 console.log(desire)
 switch (desire) {

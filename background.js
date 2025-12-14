@@ -1,11 +1,16 @@
-let getting = browser.storage.local.get("desire");
+let getting = browser.storage.local.get(null);
 getting.then(afterGet, onError)
 
 function afterGet(result) {
   console.log(result.desire)
-  if (!result.desire) {
+  if (!result.YTVideoDesire) {
     browser.storage.local.set({
-      desire: "delete",
+      YTVideoDesire: "delete",
+    });
+  }
+  if (!result.YTSummaryDesire) {
+    browser.storage.local.set({
+      YTSummaryDesire: "delete",
     });
   }
 }

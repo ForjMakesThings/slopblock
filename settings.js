@@ -1,20 +1,23 @@
 function saveOptions(e) {
   e.preventDefault();
   browser.storage.local.set({
-    desire: document.querySelector("#filterOption").value,
+    YTVideoDesire: document.querySelector("#YTVideo").value,
+    YTSummaryDesire: document.querySelector("#YTAIDescription").value,
   });
 }
 function restoreOptions() {
   function setCurrentChoice(result) {
-    document.querySelector("#filterOption").value = result.desire;
+    console.log(result)
+    document.querySelector("#YTAIDescription").value = result.YTSummaryDesire || "delete";
+    document.querySelector("#YTVideo").value = result.YTVideoDesire || "delete";
 }
   function onError(error) {
     console.log(`Error: ${error}`);
   }
 
-  let getting = browser.storage.local.get("desire");
+  let getting = browser.storage.local.get(null);
   getting.then(setCurrentChoice, onError);
 }
 
 document.addEventListener("DOMContentLoaded", restoreOptions);
-document.querySelector("form").addEventListener("submit", saveOptions);
+document.querySelector("button").addEventListener("click", saveOptions);

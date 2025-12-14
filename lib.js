@@ -3,9 +3,9 @@ function arrayHardCheck(arr, searchString) {
   return arr.some((arrVal) => searchString === arrVal);
 }
 function arraySoftCheck(arr, searchString) {
-  return arr.includes(searchString)
+  return arr.some((arrVal) => searchString.includes(arrVal))
 }
-const getting = browser.storage.local.get("desire");
+const getting = browser.storage.local.get(null);
 getting.then(onGot, onError);
 
 function onError(error) {
@@ -15,8 +15,11 @@ getting.then(onGot, onError);
 
 function onGot(item) {
   console.log(item.desire)
-  if (item.desire) {
-    desire = item.desire;
+  if (item.YTVideoDesire) {
+    YTVideoDesire = item.YTVideoDesire;
+  }
+  if (item.YTSummaryDesire) {
+    YTSummaryDesire = item.YTSummaryDesire;
   }
 }
 //get config settings

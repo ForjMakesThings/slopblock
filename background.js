@@ -1,19 +1,12 @@
-let getting = browser.storage.local.get(null);
-getting.then(afterGet, onError)
-
-function afterGet(result) {
-  console.log(result.desire)
-  if (!result.YTVideoDesire) {
+var browser = browser || chrome
+browser.storage.local.get('settings').then(afterGet)
+function afterGet(result){
+    var tempSettings = {};
+    //sets default settings values
+    tempSettings.video = (result.settings?.video) ? result.settings.video : "hide";
+    tempSettings.summary = (result.settings?.summary) ? result.settings.summary : "hide";
     browser.storage.local.set({
-      YTVideoDesire: "delete",
-    });
-  }
-  if (!result.YTSummaryDesire) {
-    browser.storage.local.set({
-      YTSummaryDesire: "delete",
-    });
-  }
-}
-function onError(error) {
-  console.log(`Error: ${error}`);
+    'settings': tempSettings
+});
+    console.log(result)
 }

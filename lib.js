@@ -1,3 +1,4 @@
+var browser = browser || chrome
 //array functions
 function arrayHardCheck(arr, searchString) {
   return arr.some((arrVal) => searchString === arrVal);
@@ -5,22 +6,15 @@ function arrayHardCheck(arr, searchString) {
 function arraySoftCheck(arr, searchString) {
   return arr.some((arrVal) => searchString.includes(arrVal))
 }
-const getting = browser.storage.local.get(null);
-getting.then(onGot, onError);
+browser.storage.local.get('settings').then(onGot, onError);
 
 function onError(error) {
   console.log(`Error: ${error}`);
 }
-getting.then(onGot, onError);
-
-function onGot(item) {
-  console.log(item.desire)
-  if (item.YTVideoDesire) {
-    YTVideoDesire = item.YTVideoDesire;
-  }
-  if (item.YTSummaryDesire) {
-    YTSummaryDesire = item.YTSummaryDesire;
-  }
+function onGot(result) {
+  console.log(result)
+  ytVideoPref = result.settings.video
+  ytSummaryPref = result.settings.summary
 }
 //get config settings
 function xpathSearch(contextNode, xpathExpression){

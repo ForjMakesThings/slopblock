@@ -1,3 +1,4 @@
+
 var blacklistedVids = [
 ];
 //elements to search
@@ -32,29 +33,33 @@ var blacklistedChan = [
 const callbackLabel = (mutationList, observer) => {
   mutationList.forEach(mutation => {
     if (mutation.target.attributes.id && mutation.target.attributes.id.nodeValue === "expandable-metadata") {
-      if (YTSummaryDesire === "delete") {
+      if (ytSummaryPref === "hide") {
         mutation.target.remove();
       }
     }
-      if (arrayHardCheck(safeDeleteNodes, mutation.target.nodeName)) {
-        //referenceEgg
-        egg = constructEggFromNode(mutation.target);
-        if (egg) {
-          if (egg.ChannelName && arraySoftCheck(blacklistedChan, egg.ChannelName)) {
-            addLabel(xpathSearch(mutation.target, './descendant::*[@id="badges"]').singleNodeValue, "Frequent AI");
-          }
-          else if (egg.VideoID && arraySoftCheck(blacklistedVids, egg.VideoID)) {
-            addLabel(xpathSearch(mutation.target, './descendant::*[@id="badges"]').singleNodeValue, "Verified AI");
-          }
+    if (arrayHardCheck(safeDeleteNodes, mutation.target.nodeName)) {
+      //referenceEgg
+      egg = constructEggFromNode(mutation.target);
+      if (egg) {
+        switch (egg.Eggtype) {
+          case "listSearchRenderer":
+            if (egg.ChannelName && arraySoftCheck(blacklistedChan, egg.ChannelName)) {
+              addLabel(xpathSearch(mutation.target, './descendant::*[@id="badges"]').singleNodeValue, "Frequent AI");
+            }
+            else if (egg.VideoID && arraySoftCheck(blacklistedVids, egg.VideoID)) {
+              addLabel(xpathSearch(mutation.target, './descendant::*[@id="badges"]').singleNodeValue, "Verified AI");
+            }
+            break
         }
       }
+    }
   }
   )
 }
 const callbackDelete = (mutationList, observer) => {
   mutationList.forEach(mutation => {
     if (mutation.target.attributes.id && mutation.target.attributes.id.nodeValue === "expandable-metadata") {
-      if (YTSummaryDesire === "delete") {
+      if (ytSummaryPref === "hide") {
         mutation.target.remove();
       }
     }
@@ -122,7 +127,7 @@ function addLabel(node, label) {
   if (node.attributes.hidden) {
     node.removeAttribute("hidden");
   }
-  if (node.attributes.badged){
+  if (node.attributes.badged) {
     return
   }
   newHt = document.createElement("p")
@@ -133,8 +138,9 @@ function addLabel(node, label) {
   node.attributes.badged = "true"
 }
 // Create an observer instance linked to the callback function based on storage
-switch (YTVideoDesire) {
-  case "delete":
+console.log(ytVideoPref)
+switch (ytVideoPref) {
+  case "hide":
     observer = new MutationObserver(callbackDelete);
     break
   case "label":
